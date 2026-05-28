@@ -1,0 +1,14 @@
+[
+  {
+    "chunk_id": 0,
+    "document_id": 1,
+    "title": "sample",
+    "text": "This is a sample document for testing semantic search and AI features."
+  },
+  {
+    "chunk_id": 1,
+    "document_id": 2,
+    "title": "sample",
+    "text": "This is a sample document for testing semantic search and AI features."
+  }
+]
