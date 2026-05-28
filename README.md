@@ -67,5 +67,19 @@ A clean, dynamically filtered view to assign, track, and complete tasks seamless
    ```
    *(View the beautiful web app at `http://localhost:5173/`)*
 
+## 🔑 Default Logins (For Testing)
+
+After running the database migrations and seeding the DB (via `seed_db.py`), you can test the application using the following roles:
+
+**Admin User** (Can upload docs, create all tasks)
+- **Email**: `admin@example.com`
+- **Password**: `AdminPassword123`
+
+**Standard User** (Can view/update assigned tasks, search docs)
+- **Email**: `user@example.com`
+- **Password**: `UserPassword123`
+
+---
+
 ## 🤝 Contributing
 Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
