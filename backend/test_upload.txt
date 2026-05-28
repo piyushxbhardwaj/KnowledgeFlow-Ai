@@ -1,0 +1,1 @@
+Password reset requires email verification.

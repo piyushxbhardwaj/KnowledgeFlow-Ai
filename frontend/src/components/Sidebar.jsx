@@ -6,10 +6,22 @@ import {
   Search, 
   BarChart2, 
   LogOut,
-  FolderOpen
+  FolderOpen,
+  X,
+  PanelLeftClose,
+  PanelLeftOpen
 } from 'lucide-react';
 
-export default function Sidebar({ user, activePage, setActivePage, onLogout }) {
+export default function Sidebar({ 
+  user, 
+  activePage, 
+  setActivePage, 
+  onLogout,
+  isDesktopCollapsed,
+  toggleDesktopSidebar,
+  isSidebarOpen,
+  setIsSidebarOpen
+}) {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, roles: ['Admin', 'User'] },
     { id: 'tasks', label: 'My Tasks', icon: CheckSquare, roles: ['User'] },
@@ -22,11 +34,31 @@ export default function Sidebar({ user, activePage, setActivePage, onLogout }) {
   const userRole = user?.role?.name || (user?.role_id === 1 ? 'Admin' : 'User');
   const filteredItems = navItems.filter(item => item.roles.includes(userRole));
 
+  const sidebarClasses = `sidebar ${isDesktopCollapsed ? 'collapsed' : ''} ${isSidebarOpen ? 'mobile-open' : ''}`;
+
   return (
-    <div className="sidebar">
-      <div className="logo-container">
-        <FolderOpen size={28} style={{ color: '#8B5CF6' }} />
-        <span className="logo-text">KnowledgeFlow AI</span>
+    <div className={sidebarClasses}>
+      
+      {/* Desktop Toggle Button - Hidden on mobile via CSS */}
+      <button className="sidebar-toggle-btn" onClick={toggleDesktopSidebar} title={isDesktopCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}>
+        {isDesktopCollapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
+      </button>
+
+      <div className="logo-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <FolderOpen size={28} style={{ color: '#8B5CF6' }} />
+          <span className="logo-text">KnowledgeFlow AI</span>
+        </div>
+        
+        {/* Mobile Close Button - Only renders when mobile drawer is open */}
+        {isSidebarOpen && (
+          <button 
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex' }} 
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            <X size={24} />
+          </button>
+        )}
       </div>
       
       <ul className="nav-links">
@@ -38,6 +70,7 @@ export default function Sidebar({ user, activePage, setActivePage, onLogout }) {
               <a 
                 className={`nav-item ${isActive ? 'active' : ''}`}
                 onClick={() => setActivePage(item.id)}
+                title={isDesktopCollapsed ? item.label : undefined}
               >
                 <Icon size={18} />
                 <span>{item.label}</span>
@@ -58,7 +91,7 @@ export default function Sidebar({ user, activePage, setActivePage, onLogout }) {
           </div>
         </div>
         
-        <button className="btn-logout" onClick={onLogout}>
+        <button className="btn-logout" onClick={onLogout} title={isDesktopCollapsed ? "Logout" : undefined}>
           <LogOut size={16} />
           <span>Logout</span>
         </button>

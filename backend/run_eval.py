@@ -25,7 +25,7 @@ def run():
 
     print_section("2. Login (POST /auth/login)")
     try:
-        r = requests.post(f"{API_URL}/auth/login", json={"email": "admin@example.com", "password": "adminpassword"})
+        r = requests.post(f"{API_URL}/auth/login", json={"email": "admin@example.com", "password": "AdminPassword123"})
         print(f"Status: {r.status_code}")
         data = r.json()
         pjson(data)
@@ -36,6 +36,7 @@ def run():
     headers = {"Authorization": f"Bearer {TOKEN}"} if TOKEN else {}
 
     print_section("3. Database verification")
+    # pyrefly: ignore [missing-import]
     from sqlalchemy import create_engine, inspect
     db_url = "sqlite:///./knowledge_flow.db"
     engine = create_engine(db_url)
